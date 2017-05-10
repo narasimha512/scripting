@@ -1,0 +1,2 @@
+ssh-keygen
+for host in $(cat cdlb.lst); do ssh-copy-id $host; done
