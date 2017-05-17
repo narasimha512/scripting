@@ -1,0 +1,2 @@
+ims/common/dia.DiaMessageRcvd
+ims/common/dia.DiaMessageSent
