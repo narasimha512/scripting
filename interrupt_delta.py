@@ -10,7 +10,7 @@ parser.add_option('-d', '--dev', dest='dev', help='Device Name')
 
 print options.dev
 
-command = "cat /proc/interrupts | grep " + options.dev + " | awk -F ' ' '{s+=$2+$2+$3+$4+$5+$6+$7+$9} END {print s}'"
+command = "cat /proc/interrupts | grep " + options.dev + " | awk -F ' ' '{s+=$2+$3+$4+$5+$6+$7+$9} END {print s}'"
 
 prev_out = 0
 while 1:
