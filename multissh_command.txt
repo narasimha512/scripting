@@ -1,0 +1,21 @@
+./multissh.sh all root "setcap "cap_net_admin,cap_net_raw,cap_sys_nice+ep" /home/rtp99/icmgw"
+./multissh.sh 53 root "setcap "cap_net_admin,cap_net_raw,cap_sys_nice+ep" /opt/SMAW/INTP/install/IMSPimslb/bin64/icmgw"
+
+ssh-keygen && for host in $(cat hosts.txt); do ssh-copy-id $host; done
+
+./multissh.sh dlb "cd /opt/SMAW/INTP/bin64/; ls -ltr *.orig;cd /opt/SMAW/INTP/lib64/; ls -ltr *.orig"
+
+./multissh.sh dlb "cd /home/rtp99; sh patch_unpatch.sh patch"
+
+./multiscp.sh  dlb icmtest
+
+./multissh.sh all "cd /home/rtp99; chmod 777 lib*; chmod 777 icm*; chmod 777 patch_unpatch.sh "
+
+./multissh.sh hss root "sed -i -e '\$a10.53.149.132 feds1\n10.53.149.132 feds2\n10.53.149.132 feds3' /etc/hosts"
+
+./multissh.sh all rtp99 "/opt/SMAW/bin/execRTPenv /opt/SMAW/INTP/bin/IcmAdminTool.pl ProcessesStart  IMS_ICMGW01"
+
+./multissh.sh all rtp99 "/opt/SMAW/bin/execRTPenv /opt/SMAW/INTP/bin/IcmAdminTool.pl ProcessesStop  IMS_ICMGW01"
+
+./multissh.sh all rtp99 "/opt/SMAW/bin/execRTPenv /opt/SMAW/INTP/bin/IcmAdminTool.pl ProcessesStop  IMS_P_UMS"
+
